@@ -35,9 +35,3 @@ export async function POST(req:NextRequest){
       )
     }
 }
-//connect db
-//name, email, password
-// email check
-//password 6 character
-//password hash
-//user create

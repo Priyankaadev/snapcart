@@ -1,8 +1,14 @@
-import { ArrowLeft, EyeIcon, EyeOff, Leaf, Lock, LogIn, Mail, User } from "lucide-react";
+'use client'
+import { ArrowLeft, EyeIcon, EyeOff, Leaf, Loader2, Lock, LogIn, Mail, User } from "lucide-react";
 import { motion } from "motion/react";
 import Image from "next/image";
 import  { useState } from "react";
 import logogoogle from "@/assets/logogoogle.jpg"
+import axios from "axios";
+import React from "react";
+import { useRouter } from "next/navigation";
+
+
 
 type propType = {
   previousStep: (s: number) => void;
@@ -13,6 +19,23 @@ function RegisterForm({ previousStep }: propType) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] =useState(false)
+  const router = useRouter()
+
+  const handleRegister = async (e:React.FormEvent)=>{
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const result = await axios.post("/api/auth/register",
+      {name, email, password}
+      )
+      console.log(result.data)
+      setLoading(false)
+    } catch (error) {
+      console.error(error);
+      setLoading(false)
+    }
+  }
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen
@@ -47,6 +70,7 @@ function RegisterForm({ previousStep }: propType) {
         Join Snapcart today <Leaf className="w-5 h-5 text-green-600" />
       </p>
       <motion.form
+      onSubmit={handleRegister}
         initial={{
           opacity: 0,
         }}
@@ -62,7 +86,7 @@ function RegisterForm({ previousStep }: propType) {
           <User className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
           <input
             className="w-full border border-gray-300 rounded-xl py-3 pl-10 pr-4 text-gray-800 focus:ring-2 focus:ring-green-500 focus:outline-none"
-            type="name"
+            type="text"
             placeholder="Your Name"
             onChange={(e) => setName(e.target.value)}
             value={name}
@@ -99,13 +123,19 @@ function RegisterForm({ previousStep }: propType) {
         {
            ( ()=>{
             const formValidation= name!=="" && email!=="" && password!==""
-                return <button disabled={formValidation}
-                 className={`w-full font-semibold py-3 rounded-xl transition-all duration-200 shadow-md inline-flex items-center justify-center gap-2 
+                return <button disabled={!formValidation || loading}
+
+             
+                className={`w-full font-semibold py-3 rounded-xl transition-all duration-200 
+                  shadow-md inline-flex items-center justify-center gap-2 
                     ${
                         formValidation ? 
                         "bg-green-600 hover:bg-green-700 text-white":
                         "bg-gray-300 text-gray-500 cursor-not-allowed"
-                 }`}>Register</button>
+                 }`}
+                >
+                  {loading? <Loader2 className="w-5 h-5 animate-spin"/>: "Register"}
+                  </button>
             })()
         }
         <div className="flex items-center gap-2 text-gray-400 text-sm mt-2">
@@ -116,12 +146,12 @@ function RegisterForm({ previousStep }: propType) {
 <button className="w-full flex items-center justify-center gap-3 border
 border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium
 transition-all duration-200">
-    <Image alt="google logo" src={logogoogle} width={20} height={20} />
+    <Image alt="google logo" src={logogoogle} width={20} height={20}  className="w-5 h-5 object-contain"/>
     Continue with Google
 </button>
       </motion.form>
-      <p className="text-gray-600 text-sm flex items-center gap-1 mt-6">Already have an account ?  
-        <LogIn className="" /> <span className=""> Sign In</span></p>
+  <p className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 mt-6" onClick={()=>router.push('/login')} >Already have an account ?  
+        <LogIn className="w-4 h-4" /> <span className="text-green-600 "> Sign In</span></p>
     </div>
   );
 }

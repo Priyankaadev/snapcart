@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
-
+import React from "react";
+import { SessionProvider } from "next-auth/react";
+import Provider from "@/Provider";
 
 export const metadata: Metadata = {
   title: "SNAPCART | 10 Minutes Grocery Delivery App",
@@ -10,15 +11,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}){
   return (
     <html
       lang="en"
     >
-      <body  className=" w-full min-h-screen bg-linear-to-b from-green-100 to-white">
+      <body className="w-full min-h-screen bg-linear-to-b from-green-100 to-white"
+        suppressHydrationWarning>
+       <Provider>
         {children}
+        </Provider>
         </body>
     </html>
   );
