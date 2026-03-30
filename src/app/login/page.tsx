@@ -133,6 +133,7 @@ function Login() {
           className="w-full flex items-center justify-center gap-3 border
 border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium
 transition-all duration-200"
+onClick={()=>signIn("google")}
         >
           <Image
             alt="google logo"

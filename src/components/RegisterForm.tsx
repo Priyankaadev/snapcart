@@ -7,6 +7,7 @@ import logogoogle from "@/assets/logogoogle.jpg"
 import axios from "axios";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 
 
@@ -145,7 +146,9 @@ function RegisterForm({ previousStep }: propType) {
         </div>
 <button className="w-full flex items-center justify-center gap-3 border
 border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium
-transition-all duration-200">
+transition-all duration-200"
+onClick={()=>signIn('google')}
+>
     <Image alt="google logo" src={logogoogle} width={20} height={20}  className="w-5 h-5 object-contain"/>
     Continue with Google
 </button>
