@@ -30,7 +30,7 @@ function RegisterForm({ previousStep }: propType) {
       const result = await axios.post("/api/auth/register",
       {name, email, password}
       )
-      console.log(result.data)
+     router.push("/login")
       setLoading(false)
     } catch (error) {
       console.error(error);
@@ -143,16 +143,18 @@ function RegisterForm({ previousStep }: propType) {
             <span className="flex-1 h-px bg-gray-200"></span>
             OR 
             <span className="flex-1 h-px bg-gray-200"></span>
-        </div>
-<button className="w-full flex items-center justify-center gap-3 border
+        </div>   
+        <div className="w-full flex items-center justify-center gap-3 border
 border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium
 transition-all duration-200"
-onClick={()=>signIn('google')}
+onClick={()=>signIn('google', {callbackUrl:'/'})}
 >
     <Image alt="google logo" src={logogoogle} width={20} height={20}  className="w-5 h-5 object-contain"/>
     Continue with Google
-</button>
+</div>
       </motion.form>
+   
+
   <p className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 mt-6" onClick={()=>router.push('/login')} >Already have an account ?  
         <LogIn className="w-4 h-4" /> <span className="text-green-600 "> Sign In</span></p>
     </div>
