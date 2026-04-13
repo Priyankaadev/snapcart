@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
+import EditRoleMobile from "@/components/EditRoleMobile";
 import connectDb from "@/lib/db";
+import { redirect } from "next/navigation";
 import User from "@/models/user.model";
 
 
@@ -10,10 +12,17 @@ async function Home() {
  if(!user){
   redirect("/login")
  }
- const inComplete = !user.mobile || !user.role || 
-  return (
- <div>
+ const inComplete = !user.mobile || !user.role || (!user.mobile && user.role)
+ if(inComplete){
+  return <EditRoleMobile />
+ }
+  
+ return(
+  <div>
 
- </div>
-  );
+  </div>
+ )
+ 
 }
+
+export default Home;
