@@ -3,6 +3,7 @@ import EditRoleMobile from "@/components/EditRoleMobile";
 import connectDb from "@/lib/db";
 import { redirect } from "next/navigation";
 import User from "@/models/user.model";
+import Nav from "@/components/Nav";
 
 
 async function Home() {
@@ -18,9 +19,9 @@ async function Home() {
  }
   
  return(
-  <div>
-
-  </div>
+  <>
+<Nav user={user}/>
+  </>
  )
  
 }
