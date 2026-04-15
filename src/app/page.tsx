@@ -17,10 +17,10 @@ async function Home() {
  if(inComplete){
   return <EditRoleMobile />
  }
-  
+  const plainUser = JSON.parse(JSON.stringify(user))
  return(
   <>
-<Nav user={user}/>
+<Nav user={plainUser}/>
   </>
  )
  
