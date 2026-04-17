@@ -4,6 +4,9 @@ import connectDb from "@/lib/db";
 import { redirect } from "next/navigation";
 import User from "@/models/user.model";
 import Nav from "@/components/Nav";
+import UserDashboard from "@/components/UserDashboard";
+import AdminDashboard from "@/components/AdminDashboard";
+import DeliveryBoyDashboard from "@/components/DeliveryBoyDashboard";
 
 
 async function Home() {
@@ -21,6 +24,12 @@ async function Home() {
  return(
   <>
 <Nav user={plainUser}/>
+{user.role =="user"?(
+  <UserDashboard />
+): user.role == "admin" ? (
+  <AdminDashboard />
+): <DeliveryBoyDashboard />
+}
   </>
  )
  
